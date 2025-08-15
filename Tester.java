@@ -11,10 +11,12 @@ public class Tester
         String myWord = "";
         ArrayList<String> words = new ArrayList<>();
         
-        //use try-catch for errors
+        
+        
+        //use try-catch statement for any errors
         try
         {
-            //read from the provided word file
+            //read from the words10 file
             File file = new File("words10.txt");
             Scanner fileScanner = new Scanner(file);
 
@@ -34,44 +36,24 @@ public class Tester
             myWord = words.get(rand.nextInt(words.size()));
             
 
-        } catch (FileNotFoundException e)
+        } 
+        catch (FileNotFoundException e)
         {
             System.out.println("Error!! File not found");
             
             return;
         }
 
-        //Create a wrapper object to get to the arraylist
+        //Here we must create wrpper aobjects and store them in the array
         Wordload loader = new Wordload();
+        
         MyArrayList<Wrapper> character = loader.loadWord(myWord);
-
         
         
         
-        System.out.println("\nWelcometo the word shuffle game!!!!");
-        //print wrapper objects
-        for (int i = 0; i < character.size(); i++)
-        {
-            
-            System.out.print(character.get(i).toString());
-            
-        }
-        System.out.println();
         
-        //Give the user a hint
-        System.out.println("\nGive the first hint");
-        
-        Random rand = new Random();
-        int randomIndex = rand.nextInt(character.size());
-        character.get(randomIndex).setDisplayed(true);
-        
-        for (int i = 0; i < character.size(); i++)
-        {
-            System.out.print(character.get(i).toString());
-        }
-        System.out.println();
-        
-        //Assignment 3 testing
+        /* 
+         Assignment 3 testing
         
         System.out.println("\nTesting Methods from Assignment 3");
         
@@ -142,5 +124,77 @@ public class Tester
             System.out.print(character.get(i).toString());
         }
         System.out.println();
+        */
+        
+        
+        
+        //task 10 code
+        final int MAX = 7;
+        
+        Scanner scan = new Scanner(System.in);
+        String originalWord = myWord;
+        
+        int numGuessLeft = MAX;
+        //Shuffle the word at the beginning of the game
+        loader.shuffleWord(character);
+        
+        System.out.println("-------------------------------------\n");
+        System.out.println("Welcometo the word shuffle game!!!!");
+        System.out.println("-------------------------------------");
+        System.out.println("\n");
+        System.out.println("\nGuess the 10-letter word!");
+        
+        //use a while loop to loop the game 7 times
+        while (numGuessLeft > 0) {
+            //Display correctly guessed letters
+            System.out.println("\nWord: " + character.toString());
+        
+            System.out.println("\nNumber of guesses left: " + numGuessLeft); 
+            System.out.print("\nYour guess: ");
+            String guess = scan.nextLine();
+            
+            //Check if the user has won
+            if (guess.equalsIgnoreCase(originalWord)) {
+                System.out.println("\nCONGRATULATIONS! You guessed the word: " + originalWord + "!");
+                //When the player guessed the word correctly end the game
+                break;
+            }
+            
+            //cHECK IF THE GUESS IS A PERFECT MATCH
+            boolean isGuessCorrect = character.verifyWord(guess);
+            
+            //check if the guess was incorrect
+            if (!isGuessCorrect)
+            {
+                numGuessLeft--;
+                System.out.println("Incorrect guess!");
+                
+                // Only give a hint if guesses are still available
+                if (numGuessLeft > 0)
+                {
+                    System.out.println("Giving a hint...");
+                    character.showHint();
+                }
+            }
+            //Check for a win after an incorrect guess if enough letters have been revealed
+            if (character.verifyWinner()) {
+                System.out.println("\nCONGRATULATIONS! You guessed the word: " + originalWord + "!");
+                break;
+            }
+        }
+        
+        //The game must end after 7 incorrect guesses
+        if (numGuessLeft == 0)
+        {
+            System.out.println("\nGAME OVER!!!");
+            System.out.println("The word was: " + originalWord);
+        }
+        
+        scan.close();
+        
+        
+        
+
+        
     }
 }
