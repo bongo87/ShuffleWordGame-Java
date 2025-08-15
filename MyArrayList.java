@@ -1,4 +1,6 @@
- 
+
+import java.util.Random;
+
 public class MyArrayList<E> 
 {
   private int size; // Number of elements in the list
@@ -90,7 +92,7 @@ public class MyArrayList<E>
   
 
 
-  //task 4: the swap method
+  
   public void swap(int index1, int index2) 
   {
       //check the validity of the indexes first
@@ -118,7 +120,7 @@ public class MyArrayList<E>
   
   
   
-  //task 6: VerifyWord method
+  
   public boolean verifyWord(String guessWord) 
   {
       //Check for invalid inputs
@@ -151,6 +153,51 @@ public class MyArrayList<E>
       
   }
   
+  
+  //task 8 of assignment 4
+ public boolean verifyWinner() 
+ {
+     
+     boolean allTrue = true;
+     for (int i = 0; i < this.size(); i++) 
+     {
+         Wrapper wrapper = (Wrapper) this.get(i);
+         if (!wrapper.isDisplayed()) 
+         {
+             allTrue = false;
+         }
+     }
+     //show all characters if there are all true
+     return allTrue;
+ }
+ 
+ 
+//task 9 of assignment 4
+public void showHint()
+{
+    //use the rand function to randomly pick a random index of the array
+    Random rand = new Random();
+    int size = this.size();
+
+    
+    int firstIndex = rand.nextInt(size);
+    boolean hint = false;
+
+    //loop through the list of objects
+    for (int i = 0; i < size && !hint; i++) 
+    {
+        
+        int index = (firstIndex + i) % size;
+        Wrapper wrapper = (Wrapper) this.get(index);
+
+        if (!wrapper.isDisplayed()) 
+        {
+            
+            wrapper.setDisplayed(true);
+            hint = true;
+        }
+    }
+}
   
  
 }
