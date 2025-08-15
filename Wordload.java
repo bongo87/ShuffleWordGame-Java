@@ -9,7 +9,7 @@ public class Wordload
         //initialise a new arraylist
         MyArrayList<Wrapper> list = new MyArrayList<>();
         
-        //input the word trough a loop
+        //input the word through a loop
         for(int i=0; i<word.length(); i++)
         {
             char Char = word.charAt(i);
