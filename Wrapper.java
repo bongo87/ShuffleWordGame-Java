@@ -56,11 +56,11 @@ public class Wrapper
         //check if isDisplay is true or not
         if(isDisplayed == true)
         {
-            return "The letter is "+ letter;
+            return ""+letter;
         }
         else
         {
-            return "_";
+            return " _ ";
         }
     }
     
